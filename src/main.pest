@@ -1,0 +1,15 @@
+num = @{ int ~ ("." ~ ASCII_DIGIT*)? ~ (^"e" ~ ASCII_DIGIT) }
+    int = { ("+" | "-")?  ~ ASCII_DIGIT+ }
+
+operation = @{ (add | subtract | multiply | divide) }
+    add = { "+" }
+    subtract = { "-" }
+    multiply = { "*" }
+    divide = { "/" }
+
+expr = { (numexpr | stringliteral) }
+    numexpr = { numterm ~ (operation ~ numterm)* }
+        numterm = _{ num | "(" ~ numexpr ~ ")" }
+    
+    stringliteral = {  stringquote ~ ASCII ~ stringquote  }
+        stringquote = { "\"" }
