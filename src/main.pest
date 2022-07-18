@@ -1,3 +1,5 @@
+
+
 num = @{ int ~ ("." ~ ASCII_DIGIT*)? ~ (^"e" ~ ASCII_DIGIT) }
     int = { ("+" | "-")?  ~ ASCII_DIGIT+ }
 
@@ -13,3 +15,5 @@ expr = { (numexpr | stringliteral) }
     
     stringliteral = {  stringquote ~ ASCII ~ stringquote  }
         stringquote = { "\"" }
+
+program = _{ SOI ~ "\n"* ~ (expr ~ "\n"+) * ~ expr? ~ EOI }

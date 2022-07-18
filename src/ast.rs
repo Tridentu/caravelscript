@@ -1,5 +1,14 @@
 
 
+pub enum CaravelDirective {
+    Language,
+    Compiler,
+    Interaction,
+    ProjectStructure,
+    License,
+    Output
+}
+
 
 pub enum Operation {
     Add,
@@ -8,13 +17,19 @@ pub enum Operation {
     Divide
 }
 
-pub enum Node {
-    Int(i32),
-    StringLiteral(String),
-    NumExpr {
-        op: Operation,
-        lhs: Box<Node>,
-        rhs: Box<Node>
-    }
-}
 
+pub enum CaravelScriptNode {
+    Int(i32),
+    String(String),
+    Directive {
+        directive: CaravelDirective,
+        expr: Box<CaravelScriptNode>
+    },
+    ArithmeticOp {
+        op: Operation,
+        lhs: Box<CaravelScriptNode>,
+        rhs: Box<CaravelScriptNode>
+    },
+    Terms(Vec<CaravelScriptNode>)
+
+}
